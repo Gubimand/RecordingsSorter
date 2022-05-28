@@ -8,13 +8,19 @@
 
 
 #include <iostream>
-using namespace std;
+#include <string>
+
+#include "usbreader/cusbreader.h"
+#include "usbreader/iusbreader.h"
 
 int main() {
-
       /*
        *
        */
+   std::string path = ".";
+   USB::IUSBReader* usbReader = new USB::USBReader(path);
+   (void)usbReader;
 
-	return 0;
+   std::cout << "hello!" << std::endl;
+   return 0;
 }
