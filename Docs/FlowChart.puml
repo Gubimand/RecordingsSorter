@@ -1,0 +1,40 @@
+title RecordingSorter Flowchart
+
+participant main
+participant CUSBReader
+
+participant CDatahandler
+participant CDataSorter
+participant CDataChecker
+participant CDataMover
+
+main -> CUSBReader : call to handler
+CUSBReader -> CUSBReader : Read USB
+alt Data was read correctly
+main <- CUSBReader : Return pointer to data
+else Data could not be read
+main <- CUSBReader : Return null pointer
+main -> main : Print result and exit
+destroy main
+end
+
+main -> CDatahandler : Init with pointer to data
+main -> CDatahandler : handler
+
+CDatahandler -> CDataSorter : Sort data
+opt Loop through the whole list
+CDataSorter -> CDataSorter : find event.json
+CDataSorter -> CDataChecker : Check if location exists
+alt
+CDataSorter <- CDataChecker : Folder exist return
+else 
+CDataChecker -> CDataChecker : Folder does not exist create folder
+CDataSorter <- CDataChecker : Folder created return
+end
+CDataSorter -> CDataMover : Move data into correct location folder
+CDataSorter <- CDataMover : Return with result true / false
+end
+CDatahandler <- CDataSorter : return result 
+main <- CDatahandler : return result
+main -> main : Print result
+destroy main
